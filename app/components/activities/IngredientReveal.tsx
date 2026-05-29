@@ -7,6 +7,7 @@ import {
   ActivityHeading,
   DoneBanner,
 } from "./Feedback";
+import ActivityIcon from "./ActivityIcon";
 
 export default function IngredientReveal({
   completed,
@@ -46,7 +47,7 @@ export default function IngredientReveal({
                 setViewed((prev) => new Set(prev).add(ing.id));
               }}
               aria-pressed={isActive}
-              className={`min-h-[64px] rounded-2xl text-2xl font-bold border-2 px-3 py-4 transition-colors ${
+              className={`min-h-[112px] min-w-[96px] flex flex-col items-center justify-center gap-2 rounded-2xl border-2 px-3 py-3 transition-colors ${
                 isActive
                   ? "bg-amber-300 border-amber-500 text-amber-950"
                   : isViewed
@@ -54,12 +55,15 @@ export default function IngredientReveal({
                     : "bg-white border-stone-200 text-stone-800 hover:bg-amber-50"
               }`}
             >
-              {ing.name}
-              {isViewed && (
-                <span className="ml-1 text-emerald-600" aria-hidden="true">
-                  ✓
-                </span>
-              )}
+              <ActivityIcon src={`/story/ingredients/${ing.id}.png`} />
+              <span className="text-lg font-bold flex items-center gap-1">
+                {ing.name}
+                {isViewed && (
+                  <span className="text-emerald-600" aria-hidden="true">
+                    ✓
+                  </span>
+                )}
+              </span>
             </button>
           );
         })}
@@ -67,9 +71,12 @@ export default function IngredientReveal({
 
       {selected && (
         <div className="mt-5 bg-white border border-amber-200 rounded-2xl p-5 space-y-3">
-          <p className="text-2xl">
-            <span className="font-bold text-amber-800">{selected.name}</span>
-          </p>
+          <div className="flex items-center gap-3">
+            <ActivityIcon src={`/story/ingredients/${selected.id}.png`} size={56} />
+            <span className="text-2xl font-bold text-amber-800">
+              {selected.name}
+            </span>
+          </div>
           <p className="text-xl text-rose-900">
             <span className="font-bold mr-1">阿嬤:</span>
             {selected.ahmaIntro}

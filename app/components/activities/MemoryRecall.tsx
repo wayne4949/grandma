@@ -8,6 +8,7 @@ import {
   DoneBanner,
   GuideMessage,
 } from "./Feedback";
+import ActivityIcon from "./ActivityIcon";
 
 export default function MemoryRecall({
   completed,
@@ -57,18 +58,21 @@ export default function MemoryRecall({
               type="button"
               onClick={() => toggle(ing.id)}
               aria-pressed={isPicked}
-              className={`min-h-[64px] rounded-2xl text-2xl font-bold border-2 px-3 py-4 transition-colors ${
+              className={`min-h-[112px] min-w-[96px] flex flex-col items-center justify-center gap-2 rounded-2xl border-2 px-3 py-3 transition-colors ${
                 isPicked
                   ? "bg-indigo-200 border-indigo-500 text-indigo-950"
                   : "bg-white border-stone-200 text-stone-800 hover:bg-indigo-50"
               }`}
             >
-              {isPicked && (
-                <span className="mr-1 text-indigo-700" aria-hidden="true">
-                  ✓
-                </span>
-              )}
-              {ing.name}
+              <ActivityIcon src={`/story/ingredients/${ing.id}.png`} />
+              <span className="text-lg font-bold flex items-center gap-1">
+                {isPicked && (
+                  <span className="text-indigo-700" aria-hidden="true">
+                    ✓
+                  </span>
+                )}
+                {ing.name}
+              </span>
             </button>
           );
         })}

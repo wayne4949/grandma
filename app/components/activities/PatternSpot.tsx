@@ -8,6 +8,14 @@ import {
   DoneBanner,
   GuideMessage,
 } from "./Feedback";
+import ActivityIcon from "./ActivityIcon";
+
+// 對應 public/story/dishes/ 的檔名
+const DISH_ICON: Record<string, string> = {
+  滷肉飯: "lurou",
+  炒青菜: "veg",
+  煮湯: "soup",
+};
 
 export default function PatternSpot({
   completed,
@@ -44,9 +52,13 @@ export default function PatternSpot({
             key={dish.name}
             className="bg-white border-2 border-amber-200 rounded-2xl p-4"
           >
-            <p className="text-xl font-bold text-amber-800 mb-3">
-              {dish.name}
-            </p>
+            <div className="flex items-center gap-2 mb-3">
+              <ActivityIcon
+                src={`/story/dishes/${DISH_ICON[dish.name]}.png`}
+                size={48}
+              />
+              <p className="text-xl font-bold text-amber-800">{dish.name}</p>
+            </div>
             <ul className="space-y-2">
               {dish.steps.map((step, i) => {
                 const isCommon = step === patternCommonStep;

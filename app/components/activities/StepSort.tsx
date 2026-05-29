@@ -8,6 +8,7 @@ import {
   DoneBanner,
   GuideMessage,
 } from "./Feedback";
+import ActivityIcon from "./ActivityIcon";
 
 const INITIAL: string[] = [
   "爆香蒜頭",
@@ -75,6 +76,10 @@ export default function StepSort({
               <span className="shrink-0 w-9 h-9 rounded-full bg-amber-200 text-amber-900 font-bold flex items-center justify-center">
                 {i + 1}
               </span>
+              <ActivityIcon
+                src={`/story/steps/s${stepSortCorrect.indexOf(step) + 1}.png`}
+                size={56}
+              />
               <span className="text-2xl">{step}</span>
             </span>
             <span className="flex gap-2">

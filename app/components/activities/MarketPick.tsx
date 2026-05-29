@@ -8,6 +8,7 @@ import {
   DoneBanner,
   GuideMessage,
 } from "./Feedback";
+import ActivityIcon from "./ActivityIcon";
 
 // 延伸活動:市場挑五花肉(觀察/條件)。不評分、答錯不責備、可重試、點擊操作。
 export default function MarketPick({
@@ -39,7 +40,7 @@ export default function MarketPick({
         攤位上有三塊肉,點點看你覺得哪一塊最適合做滷肉飯。
       </p>
 
-      <div className="space-y-3">
+      <div className="grid gap-3 sm:grid-cols-3">
         {marketOptions.map((opt) => {
           const showRight = feedback === "right" && opt.correct;
           const isWrongPick =
@@ -50,7 +51,7 @@ export default function MarketPick({
               type="button"
               onClick={() => choose(opt.id, opt.correct)}
               aria-pressed={opt.id === chosenId}
-              className={`w-full min-h-[56px] text-left rounded-2xl text-2xl px-5 py-4 border-2 transition-colors ${
+              className={`min-h-[140px] min-w-[96px] flex flex-col items-center justify-center gap-2 rounded-2xl px-3 py-4 border-2 transition-colors ${
                 showRight
                   ? "bg-emerald-200 border-emerald-500 text-emerald-950 font-bold"
                   : isWrongPick
@@ -58,7 +59,10 @@ export default function MarketPick({
                     : "bg-white border-stone-200 hover:bg-amber-50"
               }`}
             >
-              {opt.label}
+              <ActivityIcon src={`/story/market/${opt.id}.png`} size={80} />
+              <span className="text-base font-bold text-center leading-snug">
+                {opt.label}
+              </span>
             </button>
           );
         })}

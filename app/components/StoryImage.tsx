@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { storyImages } from "../lib/story-images";
+import { asset } from "../lib/asset";
 
 const PLACEHOLDER_BG = [
   "#f6d8a8",
@@ -20,7 +21,7 @@ export default function StoryImage({ pageId }: { pageId: string }) {
       {img?.src ? (
         // next/image + unoptimized:靜態匯出可用,並自動套用 basePath
         <Image
-          src={img.src}
+          src={asset(img.src)}
           alt={img.alt}
           fill
           sizes="(max-width: 768px) 100vw, 768px"

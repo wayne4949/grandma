@@ -8,6 +8,7 @@ import {
   DoneBanner,
   GuideMessage,
 } from "./Feedback";
+import ActivityIcon from "./ActivityIcon";
 
 // 延伸活動:冰箱搜尋(搜尋/模式)。從瓶罐中找出蠔油。
 // 不評分、答錯不責備、可重試、點擊操作。
@@ -48,13 +49,14 @@ export default function FridgeSearch({
               key={item.id}
               type="button"
               onClick={() => pick(item.isAnswer)}
-              className={`min-h-[64px] rounded-2xl text-2xl font-bold px-3 py-4 border-2 transition-colors ${
+              className={`min-h-[112px] min-w-[96px] flex flex-col items-center justify-center gap-2 rounded-2xl px-3 py-3 border-2 transition-colors ${
                 highlight
                   ? "bg-emerald-200 border-emerald-500 text-emerald-950"
                   : "bg-white border-stone-200 text-stone-800 hover:bg-amber-50"
               }`}
             >
-              {item.label}
+              <ActivityIcon src={`/story/fridge/${item.id}.png`} />
+              <span className="text-lg font-bold">{item.label}</span>
             </button>
           );
         })}

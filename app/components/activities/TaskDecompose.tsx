@@ -9,6 +9,7 @@ import {
   GuideMessage,
 } from "./Feedback";
 import RecipeCard from "../RecipeCard";
+import ActivityIcon from "./ActivityIcon";
 
 type Assignment = Record<string, string | null>;
 
@@ -106,13 +107,14 @@ export default function TaskDecompose({
               onDragStart={(e) => e.dataTransfer.setData("text/plain", t.id)}
               onClick={() => setSelected(selected === t.id ? null : t.id)}
               aria-pressed={selected === t.id}
-              className={`min-h-[48px] rounded-xl text-2xl px-5 py-2 border-2 cursor-grab active:cursor-grabbing ${
+              className={`min-h-[96px] min-w-[96px] flex flex-col items-center justify-center gap-1 rounded-xl px-4 py-2 border-2 cursor-grab active:cursor-grabbing ${
                 selected === t.id
                   ? "bg-amber-300 border-amber-500"
                   : "bg-stone-50 border-stone-200 hover:bg-amber-50"
               }`}
             >
-              {t.label}
+              <ActivityIcon src={`/story/decompose/${t.id}.png`} size={56} />
+              <span className="text-lg font-bold">{t.label}</span>
             </button>
           ))}
         </div>
@@ -156,9 +158,10 @@ export default function TaskDecompose({
                     }
                     onClick={() => assign(t.id, null)}
                     aria-label={`把「${t.label}」移回待分類`}
-                    className="min-h-[48px] rounded-xl text-2xl px-4 py-2 bg-white border-2 border-amber-300 hover:bg-rose-50"
+                    className="min-h-[96px] min-w-[96px] flex flex-col items-center justify-center gap-1 rounded-xl px-3 py-2 bg-white border-2 border-amber-300 hover:bg-rose-50"
                   >
-                    {t.label}
+                    <ActivityIcon src={`/story/decompose/${t.id}.png`} size={48} />
+                    <span className="text-base font-bold">{t.label}</span>
                   </button>
                 ))}
               </div>

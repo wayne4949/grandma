@@ -8,6 +8,7 @@ import {
   DoneBanner,
   GuideMessage,
 } from "./Feedback";
+import ActivityIcon from "./ActivityIcon";
 
 // 延伸活動:火候(序列/條件補強)。不評分、答錯不責備、可重試、點擊操作。
 export default function HeatControl({
@@ -50,7 +51,7 @@ export default function HeatControl({
               type="button"
               onClick={() => choose(opt.id, opt.correct)}
               aria-pressed={opt.id === chosenId}
-              className={`min-h-[64px] rounded-2xl text-2xl px-5 py-4 border-2 transition-colors ${
+              className={`min-h-[140px] min-w-[96px] flex flex-col items-center justify-center gap-2 rounded-2xl px-5 py-4 border-2 transition-colors ${
                 showRight
                   ? "bg-emerald-200 border-emerald-500 text-emerald-950 font-bold"
                   : isWrongPick
@@ -58,7 +59,8 @@ export default function HeatControl({
                     : "bg-white border-stone-200 hover:bg-amber-50"
               }`}
             >
-              {opt.label}
+              <ActivityIcon src={`/story/heat/${opt.id}.png`} size={80} />
+              <span className="text-xl font-bold">{opt.label}</span>
             </button>
           );
         })}
