@@ -1,4 +1,4 @@
-// 共用回饋:答錯用阿嬤口氣引導(不責備),完成用溫暖肯定。
+// 共用回饋:答錯用桃姨口氣引導(不責備),完成用溫暖肯定。
 
 export function GuideMessage({ children }: { children: React.ReactNode }) {
   return (

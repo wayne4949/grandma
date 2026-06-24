@@ -1,88 +1,43 @@
-"use client";
-
-import { useEffect } from "react";
-import { pages, type ActivityKind } from "./lib/story";
-import { useProgress, setProgress } from "./lib/progress";
-import PageShell from "./components/PageShell";
-import IngredientReveal from "./components/activities/IngredientReveal";
-import StepSort from "./components/activities/StepSort";
-import PatternSpot from "./components/activities/PatternSpot";
-import ConditionChoice from "./components/activities/ConditionChoice";
-import MemoryRecall from "./components/activities/MemoryRecall";
-import TaskDecompose from "./components/activities/TaskDecompose";
-import MarketPick from "./components/activities/MarketPick";
-import FridgeSearch from "./components/activities/FridgeSearch";
-import HeatControl from "./components/activities/HeatControl";
+import Link from "next/link";
 
 export default function Home() {
-  const progress = useProgress();
-  const currentPage = Math.min(Math.max(0, progress.page), pages.length - 1);
-  const completed = progress.completed;
-
-  // 換頁時捲回頂端(不含 setState,符合 effect 規範)
-  useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, [currentPage]);
-
-  const goTo = (target: number) => {
-    const clamped = Math.min(Math.max(0, target), pages.length - 1);
-    setProgress((prev) => ({ ...prev, page: clamped }));
-  };
-
-  const markComplete = (kind: ActivityKind) => {
-    setProgress((prev) =>
-      prev.completed.includes(kind)
-        ? prev
-        : { ...prev, completed: [...prev.completed, kind] },
-    );
-  };
-
-  const page = pages[currentPage];
-  const isLast = currentPage === pages.length - 1;
-  const activityCleared = !page.activity || completed.includes(page.activity);
-  const canGoNext = !isLast && activityCleared;
-  const canGoPrev = currentPage > 0;
-
-  const renderActivity = () => {
-    if (!page.activity) return null;
-    const activity = page.activity;
-    const props = {
-      completed: completed.includes(activity),
-      onComplete: () => markComplete(activity),
-    };
-    switch (activity) {
-      case "ingredient":
-        return <IngredientReveal {...props} />;
-      case "stepSort":
-        return <StepSort {...props} />;
-      case "pattern":
-        return <PatternSpot {...props} />;
-      case "condition":
-        return <ConditionChoice {...props} />;
-      case "memory":
-        return <MemoryRecall {...props} />;
-      case "decompose":
-        return <TaskDecompose {...props} />;
-      case "marketPick":
-        return <MarketPick {...props} />;
-      case "fridgeSearch":
-        return <FridgeSearch {...props} />;
-      case "heatControl":
-        return <HeatControl {...props} />;
-    }
-  };
-
   return (
-    <PageShell
-      page={page}
-      pageIndex={currentPage}
-      total={pages.length}
-      canGoPrev={canGoPrev}
-      canGoNext={canGoNext}
-      onPrev={() => goTo(currentPage - 1)}
-      onNext={() => goTo(currentPage + 1)}
-    >
-      {renderActivity()}
-    </PageShell>
+    <main className="min-h-screen flex items-center justify-center p-6">
+      <div className="w-full max-w-2xl text-center">
+        <p className="text-xl text-amber-700 mb-3">銀髮族・認知能力 × 運算思維學習繪本</p>
+        <h1 className="font-black text-amber-900 mb-2">《阿桃師的辦桌》</h1>
+        <p className="text-2xl text-stone-700 mb-10">
+          總鋪師桃姨的一工——一桌十道菜，是一世人的條理。
+        </p>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Link
+            href="/book/1"
+            className="group rounded-3xl bg-amber-500 text-white shadow-xl px-8 py-10 hover:bg-amber-600 transition-colors"
+          >
+            <span className="block text-6xl mb-4" aria-hidden="true">
+              📖
+            </span>
+            <span className="block text-3xl font-black mb-2">看繪本</span>
+            <span className="block text-lg opacity-90">32 頁・左右翻頁・跟桃姨辦一桌</span>
+          </Link>
+
+          <Link
+            href="/activities"
+            className="group rounded-3xl bg-emerald-500 text-white shadow-xl px-8 py-10 hover:bg-emerald-600 transition-colors"
+          >
+            <span className="block text-6xl mb-4" aria-hidden="true">
+              🧩
+            </span>
+            <span className="block text-3xl font-black mb-2">玩活動</span>
+            <span className="block text-lg opacity-90">動腦小遊戲・練運算思維與認知</span>
+          </Link>
+        </div>
+
+        <p className="mt-10 text-base text-stone-500">
+          建議用大字、坐予四正，慢慢來。每个活動攏會使重試。
+        </p>
+      </div>
+    </main>
   );
 }

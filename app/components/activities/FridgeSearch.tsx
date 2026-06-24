@@ -10,7 +10,7 @@ import {
 } from "./Feedback";
 import ActivityIcon from "./ActivityIcon";
 
-// 延伸活動:冰箱搜尋(搜尋/模式)。從瓶罐中找出蠔油。
+// 活動・揣冰櫥（認知：視覺短期記憶／集中注意）。佇干擾矸罐中揣出蠔油。
 // 不評分、答錯不責備、可重試、點擊操作。
 export default function FridgeSearch({
   completed,
@@ -36,9 +36,9 @@ export default function FridgeSearch({
 
   return (
     <ActivityCard>
-      <ActivityHeading>延伸活動・冰箱搜尋 ── 哪一罐是蠔油?</ActivityHeading>
+      <ActivityHeading>揣冰櫥 ── 佗一矸是蠔油？</ActivityHeading>
       <p className="text-lg text-stone-600 mb-4">
-        冰箱裡瓶瓶罐罐,找出顏色深、較稠的那一罐蠔油。點點看。
+        冰櫥內底矸矸罐罐，揣出彼矸色較深、較稠的蠔油。點點看。
       </p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -48,11 +48,12 @@ export default function FridgeSearch({
             <button
               key={item.id}
               type="button"
+              disabled={solved}
               onClick={() => pick(item.isAnswer)}
               className={`min-h-[112px] min-w-[96px] flex flex-col items-center justify-center gap-2 rounded-2xl px-3 py-3 border-2 transition-colors ${
                 highlight
                   ? "bg-emerald-200 border-emerald-500 text-emerald-950"
-                  : "bg-white border-stone-200 text-stone-800 hover:bg-amber-50"
+                  : "bg-white border-stone-200 text-stone-800 enabled:hover:bg-amber-50 disabled:opacity-60"
               }`}
             >
               <ActivityIcon src={`/story/fridge/${item.id}.png`} />
@@ -63,10 +64,12 @@ export default function FridgeSearch({
       </div>
 
       {feedback === "wrong" && (
-        <GuideMessage>再揣看覓,顏色深、較稠,跟醬油較像的那一罐?</GuideMessage>
+        <GuideMessage>
+          毋是彼矸啦。閣揣看覓 ── 色較深、較稠，kap醬油較成的彼矸。
+        </GuideMessage>
       )}
       {feedback === "right" && (
-        <DoneBanner>著,就是蠔油!顏色深又鹹,等咧醬油無夠就靠它。</DoneBanner>
+        <DoneBanner>著，就是蠔油！色深閣鹹，等咧豆油無夠就靠伊救色。</DoneBanner>
       )}
     </ActivityCard>
   );

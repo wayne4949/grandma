@@ -1,627 +1,438 @@
-// 全部頁面資料與活動設定。
-// 標 [canon] 的頁面旁白/對白逐字取自 STORY_CANON.md 第六章,請勿改寫。
-// 其餘新頁(Phase 2 擴展)旁白/對白為依第八章語氣 authored:含蓄、具體、留白,
-// 台語單字自然夾雜、不附羅馬拼音;阿公僅以照片/回憶/物件存在。
-// 嚴守 STORY_CANON.md 第八章的語氣準則與禁忌台詞清單(此處不重述),
-// 並完全避開任何記憶相關的醫療字眼。
+// 《阿桃師的辦桌》── 全部頁面資料與活動設定。
+// 內容權威：STORY_CANON_C_辦桌_v2.md。標 [canon] 的旁白／對白逐字取自第六章逐頁腳本，
+// 請勿改寫；活動頁僅有「任務」描述者，旁白為依第十節語氣鐵則 authored 的銜接句
+// （桃姨台語碎念、含蓄具體、台語單字夾國語、句尾加「啦喔啊」、避免完整台語長句）。
+// 鐵則：桃姨全程是主角與專家；無人去世；任何頁面／活動／回饋不得出現失憶／失智醫療字眼。
 
 export type ActivityKind =
+  | "menuRead"
   | "ingredient"
+  | "marketPick"
   | "stepSort"
   | "pattern"
   | "condition"
   | "memory"
   | "decompose"
-  // 延伸活動(仍遵守核心鐵則:不評分、答錯不責備、可重試、有點擊操作)
-  | "marketPick"
   | "fridgeSearch"
+  | "scheduleStoves"
   | "heatControl";
 
 export interface Dialogue {
-  /** 角色名;旁白式舞台指示(整句括號)為 null */
+  /** 角色名；旁白式舞台指示（整句括號）為 null */
   speaker: string | null;
   text: string;
 }
 
 export interface Page {
-  id: string; // 例:P.1
+  id: string; // 例：P.1
   title: string;
   narration: string;
   dialogue: Dialogue[];
+  /** 該頁對應的互動活動 id；故事頁只放一顆選配深連結，不在故事流硬插測驗 */
   activity?: ActivityKind;
+  /** 紅單機關頁：P.3 空白、P.24 翻面成「謝桃姨」 */
+  redSlip?: "blank" | "reveal";
+  /** 擬真食物特寫頁：版面讓圖滿版、文字最少 */
+  fullBleed?: boolean;
 }
 
-// ── 31 頁・三幕結構(藍圖第九章擴展;canon 10 頁原文不動) ──
+// ── 32 頁・三幕結構（逐頁照 canon §6） ──
 export const pages: Page[] = [
-  // ===== 第一幕・啟程 =====
+  // ===== 第一幕・接單（這桌的開始） =====
   {
     id: "P.1",
-    title: "凌晨三點 ── 翻舊照片",
-    narration:
-      "凌晨三點,時差讓小明睡不著。客廳的燈還亮著,一本舊相簿攤在桌上。",
+    title: "封面 ── 灶頂的早晨",
+    narration: "今仔日，這口灶欲煮一桌人的代誌。", // [canon]
     dialogue: [
-      {
-        speaker: "小明",
-        text: "(翻著相簿,停在一張泛黃的照片)…這個是阿公?",
-      },
-      {
-        speaker: "阿嬤",
-        text: "(端著茶走出來)還沒睏喔?彼張啊,你阿公二十幾歲,站在攤位前挑肉,挑歸晡。",
-      },
-      {
-        speaker: "小明",
-        text: "(盯著照片,手指在邊緣摩挲,沒說話)",
-      },
-      {
-        speaker: "阿嬤",
-        text: "(坐下來)明仔載你就要走了。趁這暗,有幾項物件,我想交給你。",
-      },
+      { speaker: null, text: "（天拄光，老灶間。大鼎掛咧，蒸氣初起，黑貓阿咪睏佇灶邊。桃姨的背影咧縛圍裙。）" },
     ],
   },
   {
-    id: "P.2", // [canon] 原 P.1
-    title: "封面 ── 老鍋仔的早晨",
-    narration: "「老鍋仔,今天我們要把你的故事傳下去。」阿嬤對鍋輕聲說。",
+    id: "P.2",
+    title: "人物登場 ── 阮三个kap一口鼎",
+    narration: "桃姨、阿明、黑貓阿咪，閣有彼口四十冬的老鼎，今仔日欲做伙撐起一桌。",
     dialogue: [
-      { speaker: "小明", text: "阿嬤?這麼早叫我幹嘛?" },
-      {
-        speaker: "阿嬤",
-        text: "(對鍋)老鍋仔啊,卡細膩咧,人家好幾年沒用妳了。(轉身對小明)來,今天我教你做滷肉飯。以後你在日本想家,自己做。",
-      },
+      { speaker: "桃姨", text: "鼎仔，今仔日換你出場啊。" }, // [canon]
+      { speaker: "阿明", text: "（舉手機）阿嬤，我錄起來喔。" }, // [canon]
     ],
   },
   {
-    id: "P.3", // [canon] 原 P.2
-    title: "人物登場 ── 我們三個",
-    narration:
-      "這是阿桃阿嬤、孫子小明,還有黑貓阿咪。今天他們要一起完成一件重要的事。",
+    id: "P.3",
+    title: "一張紅單 ── 今仔日有一桌",
+    narration: "紅單來矣，啥人欲辦的？頂懸無寫清楚。", // [canon]
     dialogue: [
-      { speaker: "阿嬤", text: "(笑)你穿這個圍裙還是這麼好笑。" },
-      { speaker: "小明", text: "這不是妳逼我穿的嗎?" },
-      { speaker: "阿嬤", text: "要乖。妳阿公以前嘛是穿一樣的,只是花色不同啦。" },
-      { speaker: null, text: "(阿咪喵了一聲,跳上椅子。)" },
+      { speaker: "阿明", text: "這是辦予啥人的？" }, // [canon]
+      { speaker: "桃姨", text: "免問遐濟，先煮就著。" }, // [canon]
     ],
+    redSlip: "blank",
   },
   {
-    id: "P.4", // [canon] 原 P.3
-    title: "故事開始 ── 為什麼是今天",
-    narration:
-      "傍晚的飛機,小明要離開一年。今天有 10 個小時,要把阿嬤的滷肉飯,完整地交給他。",
+    id: "P.4",
+    title: "讀單 ── 這桌欲幾道菜？",
+    narration: "紅單頂懸，十道菜一字排開。逐道欲用著啥物主料，先讀予清楚。",
     dialogue: [
-      { speaker: "阿嬤", text: "來,先喝茶。" },
-      { speaker: "小明", text: "阿嬤,妳什麼時候開始學這個的?" },
-      {
-        speaker: "阿嬤",
-        text: "(想了想)妳阿公教我的時候啊,我大概⋯25 歲?剛嫁來。他說他媽媽教他的,他媽媽說是他外婆教的。所以這個味道,是好幾代了。",
-      },
-      { speaker: "小明", text: "(認真起來)那我要學好。" },
+      { speaker: "桃姨", text: "看單愛看予明，菜名、主料對予著，才袂落勾。" },
     ],
+    activity: "menuRead",
   },
-
-  // ===== 第二幕・傳承 =====
   {
     id: "P.5",
-    title: "出發去市場",
-    narration:
-      "早市還沒散。阿嬤拿起藤編菜籃,把零錢包塞進口袋,回頭看小明還在綁鞋帶。",
+    title: "拆場 ── 一桌按怎變十道菜",
+    narration: "桃姨佇細塊烏枋頂懸，共規桌拆做三站：備料站、火頭站、出菜站。",
     dialogue: [
-      { speaker: "阿嬤", text: "卡緊咧,慢吞吞。好肉攏被人挑走了。" },
-      { speaker: "小明", text: "(邊綁鞋帶)阿嬤妳走這麼快做什麼啦…" },
-      {
-        speaker: "阿嬤",
-        text: "你阿公以前更早。天還沒光就去排隊,說「肉要趁鮮」。",
-      },
-      { speaker: null, text: "(阿咪跟到門口,喵一聲,沒再往前。)" },
+      { speaker: "桃姨", text: "規桌看著驚，拆做三堆就袂亂。" }, // [canon]
+    ],
+    activity: "decompose",
+  },
+
+  // ===== 第二幕・備辦（規工的火） =====
+  {
+    id: "P.6",
+    title: "出發去市場",
+    narration: "欲辦好一桌，代先愛揀好料。", // [canon]
+    dialogue: [
+      { speaker: null, text: "（桃姨kap阿明提菜籃出門，晨光斜照。）" },
     ],
   },
   {
-    id: "P.6",
-    title: "市場 ── 挑五花肉",
-    narration:
-      "攤位上擺著幾塊五花肉,看起來都差不多。阿嬤說:你看,哪一塊肥瘦三比七?",
+    id: "P.7",
+    title: "揀肉 ── 五花肉肥瘦三比七",
+    narration: "肉攤頭前园三塊五花肉。桃姨叫阿明揀彼塊「肥瘦三比七」的。",
     dialogue: [
-      {
-        speaker: "阿嬤",
-        text: "肥的大概三成,瘦的七成,這樣燉起來才不會柴,也不會太油。",
-      },
-      { speaker: "小明", text: "(湊近看)…看起來都很像欸。" },
-      { speaker: "阿嬤", text: "(笑)慢慢看。你阿公看歸晡,我看你會看多久。" },
+      { speaker: "桃姨", text: "我頭一擺綴師父來市仔，連肉都袂曉揀…" }, // [canon]〈回憶〉
+      { speaker: "桃姨", text: "肥的三分、瘦的七分，燉起來才袂柴，嘛袂傷油。" },
     ],
     activity: "marketPick",
   },
   {
-    id: "P.7", // [canon] 原 P.4
-    title: "認識食材 ── 阿公最挑五花肉",
-    narration: "認識六種食材。每一種,都有阿公的故事。",
+    id: "P.8",
+    title: "認食材 ── 逐項攏有名有來歷",
+    narration: "轉去灶間，醬油、米酒、冰糖、蒜頭、五香粉、薑，一字排開。逐項攏有名有來歷。",
     dialogue: [
-      { speaker: "阿嬤", text: "這個五花肉啊,要選肥瘦三比七的。" },
-      { speaker: "小明", text: "為什麼?" },
-      {
-        speaker: "阿嬤",
-        text: "(笑)我哪知道為什麼。妳阿公以前每次都站在攤位前看半小時,他說「不對不要」。後來老闆都直接說「阿水兄,這塊給你留的」。",
-      },
-      { speaker: "攤位老闆", text: "(笑)阿桃姨,妳今天這麼隆重?" },
-      { speaker: "阿嬤", text: "我孫子要學。" },
+      { speaker: "桃姨", text: "醬油揀甘甜的，冰糖落少少，色才會水。" }, // [canon]〈師父口訣〉
     ],
     activity: "ingredient",
   },
   {
-    id: "P.8",
-    title: "食材小故事 ── 醬油與米酒",
-    narration:
-      "回到廚房,阿嬤把調味料一字排開。倒醬油的時陣,她沒拿量匙。",
-    dialogue: [
-      { speaker: "小明", text: "阿嬤妳不用量喔?" },
-      {
-        speaker: "阿嬤",
-        text: "量啥?(手腕一轉,倒了一圈)差不多就按呢。你阿公說,倒久了,手家己會知。",
-      },
-      { speaker: "小明", text: "(試著倒,手一抖,倒多了)…啊。" },
-      {
-        speaker: "阿嬤",
-        text: "(笑)無要緊,加減一點較香。你阿公頭一擺倒,嘛是規碗烏。",
-      },
-    ],
-  },
-  {
     id: "P.9",
-    title: "食材小故事 ── 冰糖與五香粉",
-    narration: "阿嬤捏起幾粒冰糖,在燈下看它透明的邊。",
+    title: "高湯底 ── 逐鍋湯的根",
+    narration: "一鍋好湯底，欲飼規桌的菜。", // [canon]
     dialogue: [
-      { speaker: "阿嬤", text: "用冰糖,色才會水。白糖傷甜。" },
-      { speaker: "小明", text: "五香粉呢?要放多少?" },
-      {
-        speaker: "阿嬤",
-        text: "(指尖捏一小撮)按呢。你阿公落五香粉從來不給人看,說是「撇步」。我偷看好幾擺才學起來。",
-      },
-      { speaker: "小明", text: "(笑)所以妳也是偷學的。" },
-      { speaker: "阿嬤", text: "(也笑)互相啦。" },
+      { speaker: null, text: "（一大鍋高湯咧滾，邊仔列幾若道欲用的湯品。）" },
     ],
   },
   {
     id: "P.10",
-    title: "料理示範 ── 阿嬤先做一次",
-    narration:
-      "開火。阿嬤要先做一遍給小明看,叫他先別動手,用眼睛記。",
+    title: "起灶 ── 三口爐排兵布陣",
+    narration: "三口爐，十道菜，時間干焦遮爾濟。", // [canon]
     dialogue: [
-      { speaker: "阿嬤", text: "你先看。看會了,才換你。" },
-      { speaker: "小明", text: "(舉起手機)我錄影。" },
-      {
-        speaker: "阿嬤",
-        text: "錄啥影,用眼睛看。(頓了一下)…好啦,錄一段嘛好,你在日本忘記了可以看。",
-      },
-      { speaker: null, text: "(蒜頭一下鍋,香氣衝上來。)" },
+      { speaker: "桃姨", text: "三口爐點予著，鼎一鼎一鼎排予好。" },
     ],
   },
   {
     id: "P.11",
-    title: "火候 ── 大火還是小火?",
-    narration: "肉下鍋,水也加了。阿嬤問:這時陣,要大火還是小火?",
+    title: "排步驟 ── 控肉愛代先滷",
+    narration: "控肉一道菜的步驟卡拍散去矣。愛照正確的順序排予好。",
     dialogue: [
-      {
-        speaker: "阿嬤",
-        text: "火傷大,湯緊焦、肉硬硬;火傷細,煮歸晡袂入味。",
-      },
-      { speaker: "小明", text: "那…燉的時候應該小火吧?" },
-      { speaker: "阿嬤", text: "(笑)你說看覓。" },
-    ],
-    activity: "heatControl",
-  },
-  {
-    id: "P.12", // [canon] 原 P.5
-    title: "排出步驟 ── 阿公以前都這樣做",
-    narration: "5 個步驟,要按順序來。妳阿公說,順序錯了,味道就跑了。",
-    dialogue: [
-      {
-        speaker: "阿嬤",
-        text: "妳阿公以前啊,先爆香蒜頭,再下肉。他說這樣肉才會香。",
-      },
-      {
-        speaker: "小明",
-        text: "等等等,我幫妳排一下。應該是:先洗切肉,再爆香,再淋醬上色,然後加水燉煮,最後大火收汁,對嗎?",
-      },
-      { speaker: "阿嬤", text: "(看了看)對,妳阿公也是這樣排的。" },
-      { speaker: null, text: "(老鍋仔此時發出清亮的「叮」一聲 ── 像是同意)" },
+      { speaker: "桃姨", text: "順序毋著，味就走精。一步一步來。" },
     ],
     activity: "stepSort",
   },
   {
-    id: "P.13",
-    title: "排序結果驗證 ── 味道對了",
-    narration: "步驟排好了。阿嬤掀開鍋蓋聞一下,點點頭。",
+    id: "P.12",
+    title: "一目了然 ── 這幾道攏愛先爆香",
+    narration: "控肉、炒時蔬、煮湯三道並排。揣看覓，啥物步驟逐道攏有？",
     dialogue: [
-      { speaker: "阿嬤", text: "著。順序對了,味就袂走。" },
-      { speaker: "小明", text: "我把它記在手機裡了,步驟一、步驟二…" },
-      {
-        speaker: "阿嬤",
-        text: "記佇手機好,毋過上要緊的是記佇手裡。",
-      },
-      { speaker: null, text: "(鍋裡咕嘟咕嘟,冒著泡。)" },
-    ],
-  },
-  {
-    id: "P.14",
-    title: "三道菜並列 ── 咦,這個做過?",
-    narration:
-      "趁燉煮的空檔,小明在筆記本上畫了三道菜的步驟,排成一排。",
-    dialogue: [
-      {
-        speaker: "小明",
-        text: "阿嬤,我把滷肉飯、炒青菜、煮湯的步驟都寫下來了。",
-      },
-      { speaker: "阿嬤", text: "(看了看)按呢排,你看會出什麼無?" },
-      { speaker: "小明", text: "(盯著看)…好像有一個動作,每一道都有。" },
-      { speaker: "阿嬤", text: "(笑)你家己看看覓。" },
-    ],
-  },
-  {
-    id: "P.15", // [canon] 原 P.6
-    title: "辨識規律 ── 咦,這個動作好像做過?",
-    narration:
-      "小明發現,有些動作一直重複出現 ── 原來阿嬤的料理裡,藏著規律。",
-    dialogue: [
-      {
-        speaker: "小明",
-        text: "阿嬤,妳剛剛炒菜也是先爆香蒜頭,煮湯好像也是欸?",
-      },
-      {
-        speaker: "阿嬤",
-        text: "(笑)對啊,你真聰明。你阿公說,「爆香」是所有菜的開頭,蒜頭一下去香氣就出來了。",
-      },
-      { speaker: "小明", text: "所以記住這個,很多菜都通用!" },
-      { speaker: "阿嬤", text: "就是這樣。學會一個規律,勝過背十道菜。" },
+      { speaker: "桃姨", text: "學會一个規律，較贏記十道菜。" }, // [canon]
     ],
     activity: "pattern",
   },
   {
-    id: "P.16",
-    title: "冰箱搜尋 ── 哪一罐是蠔油?",
-    narration: "燉的空檔,阿嬤打開冰箱整理。她指著滿滿一層瓶罐,考小明。",
+    id: "P.13",
+    title: "多爐並進 ── 同齊顧三鼎",
+    narration: "三口爐，仝齊咧走無仝進度的菜。共逐道排予好，開桌的時陣攏愛燒燙燙。",
     dialogue: [
-      { speaker: "阿嬤", text: "你揣看覓,哪一罐是蠔油?" },
-      { speaker: "小明", text: "(湊近看一堆瓶罐)欸…這些長得都好像。" },
-      { speaker: "阿嬤", text: "顏色較深、較稠的那罐。" },
+      { speaker: "桃姨", text: "目睭顧四面，時間捏予準，無一鼎會冷去。" },
     ],
-    activity: "fridgeSearch",
+    activity: "scheduleStoves",
   },
   {
-    id: "P.17", // [canon] 原 P.7
-    title: "條件判斷 ── 醬油不夠了!",
+    id: "P.14",
+    title: "危機 ── 上好的老豆油，拄仔用焦！",
     narration:
-      "意外發生了。但阿嬤不慌 ── 因為阿公以前也常常這樣亂搞。",
+      "招牌控肉拄欲落醬上色，彼矸上好的老豆油拄好焦去。窗外天色暗落來，人客的跤步聲愈來愈近。",
     dialogue: [
-      { speaker: "阿嬤", text: "(看到空瓶)啊⋯醬油用完了。" },
-      { speaker: "小明", text: "(緊張)那怎麼辦?要去買嗎?" },
-      { speaker: null, text: "(阿咪喵了一聲)" },
-      {
-        speaker: "阿嬤",
-        text: "(突然笑出來)哎,對啦,你阿公以前也是這樣!沒醬油就用蠔油加糖亂搞,我每次都罵他「你這樣會壞掉啦」,結果意外好吃!",
-      },
-      { speaker: "小明", text: "真的可以嗎?" },
-      { speaker: "阿嬤", text: "來,我們今天就試試看「阿公的版本」。" },
+      { speaker: "桃姨", text: "（眉頭一結）…偏偏這時陣。" },
+      { speaker: "阿明", text: "（緊張）阿嬤，按怎辦？" },
     ],
     activity: "condition",
   },
   {
-    id: "P.18",
-    title: "阿公亂搞史 ── 回憶",
-    narration: "鍋裡燉著,阿嬤想起以前。畫面泛黃,像一張老照片。",
+    id: "P.15",
+    title: "急中生智 ── 師父嘛捌按呢烏白舞",
+    narration: "幾十年前彼擺，料無夠，伊嘛是按呢舞舞咧，煞舞出一道成名菜。", // [canon]〈回憶〉
     dialogue: [
-      {
-        speaker: "阿嬤",
-        text: "你阿公啊,愛家己亂試。有一擺我出門,轉來鼎裡是肉配鳳梨,規間厝甜甜的。",
-      },
-      { speaker: "小明", text: "(笑)結果咧?" },
-      {
-        speaker: "阿嬤",
-        text: "結果…煞意外好食。我罵歸晡,尾仔家己加一碗飯。",
-      },
-      { speaker: null, text: "(相片裡,一個人影偷偷掀鍋蓋,被貓看見。)" },
+      { speaker: null, text: "（桃姨手起手落，蠔油加糖救場；側邊一張反黃的老照片。）" },
     ],
   },
   {
-    id: "P.19", // [canon] 原 P.8
-    title: "記憶活動 ── 我們剛剛放了什麼?",
-    narration: "煮的時候有空檔。阿嬤考小明:剛剛放了什麼?",
+    id: "P.16",
+    title: "揣冰櫥 ── 佗一矸是蠔油",
+    narration: "冰櫥內底塞甲滿滿是。佇遮濟矸罐內底，鎖定彼矸蠔油。",
     dialogue: [
-      { speaker: "阿嬤", text: "來,複習一下。我們今天的滷肉飯放了哪些東西?" },
-      {
-        speaker: "小明",
-        text: "嗯⋯五花肉、醬油⋯蠔油加糖、米酒、冰糖、蒜頭⋯五香粉?",
-      },
-      { speaker: "阿嬤", text: "(笑)妳記得不錯喔。" },
-      { speaker: "小明", text: "阿嬤,妳怎麼從來都不會忘?" },
-      {
-        speaker: "阿嬤",
-        text: "(沉默一下,語氣變得溫柔)有些東西啊,身體會記得。妳阿公教我的時候,我也是用身體記。",
-      },
-      { speaker: null, text: "(阿咪悄悄走到全家福照片旁,蜷縮起來)" },
+      { speaker: "桃姨", text: "色較深、較稠彼矸，就是蠔油。" },
+    ],
+    activity: "fridgeSearch",
+  },
+  {
+    id: "P.17",
+    title: "收汁的聲 ── 老鼎會講話",
+    narration: "油亮的控肉、蒸氣、肉的紋理。阿明洗鼎反面，瞥著鼎底刻字。",
+    dialogue: [
+      { speaker: "阿明", text: "阿嬤，鼎仔下跤刻『阿桃』…" }, // [canon]
+      { speaker: "桃姨", text: "（停一下）…彼是師父刻的。" }, // [canon]
+    ],
+    fullBleed: true,
+  },
+  {
+    id: "P.18",
+    title: "點數 ── 閣欠佗幾道、佗鼎好矣",
+    narration: "三口爐各自的進度，桃姨心內咧盤算。佗一鼎好矣？閣欠佗幾道？",
+    dialogue: [
+      { speaker: "桃姨", text: "阿明，你共我鬥相共記咧——佗鼎园啥，佗道好矣？" },
     ],
     activity: "memory",
   },
   {
-    id: "P.20",
-    title: "身體會記得 ── 那雙手",
-    narration:
-      "鍋還在燉。小明看著阿嬤的手,那雙手好像不用想,就知道下一步。",
+    id: "P.19",
+    title: "學徒上手 ── 阿明用手機鬥相共",
+    narration: "阿明共計時器、清單 app 排出來，鬥桃姨盯時間。",
     dialogue: [
-      { speaker: "小明", text: "阿嬤,妳都不用看食譜。" },
-      { speaker: "阿嬤", text: "看啥食譜。做幾若百擺了,手家己會走。" },
-      { speaker: "小明", text: "(低頭看自己的手)…那我的手,會記得嗎?" },
-      {
-        speaker: "阿嬤",
-        text: "會。你今仔日做過,它就袂放袂記。慢慢來。",
-      },
+      { speaker: "桃姨", text: "我講你彼支手機嘛有路用喔。" }, // [canon]
+      { speaker: "阿明", text: "（笑）" }, // [canon]
     ],
   },
   {
-    id: "P.21",
-    title: "阿嬤學藝 ── 她也是這樣學的",
-    narration: "阿嬤一邊顧火,一邊想起自己二十五歲、剛嫁來的那年。",
+    id: "P.20",
+    title: "芳味滿厝 ── 人客欲到矣",
+    narration: "日頭欲落山，人客的跤步聲愈來愈近。", // [canon]
     dialogue: [
-      {
-        speaker: "阿嬤",
-        text: "我頭一次煮這道,鹹甲袂食得。你阿公一句話無講,攏食了了。",
-      },
-      { speaker: "小明", text: "都沒嫌喔?" },
-      {
-        speaker: "阿嬤",
-        text: "無。伊只有講一句:「明仔載較少鹽。」我就按呢學起來。",
-      },
-      { speaker: null, text: "(窗外的光,和那年差不多。)" },
+      { speaker: null, text: "（十道菜接近完成，芳味四溢，遠遠有人陸續向廟埕來。）" },
     ],
   },
 
-  // ===== 第三幕・啟航 =====
+  // ===== 第三幕・開桌（這桌辦予啥人） =====
   {
-    id: "P.22", // [canon] 原 P.9
-    title: "故事高潮 ── 飯做好了",
-    narration: "傍晚 5 點半。飯做好了。三碗 ── 給小明、給阿嬤、給⋯",
+    id: "P.21",
+    title: "排盤 ── 十道菜做伙上桌的時陣",
+    narration: "出菜台頂十道菜一字排開，桃姨拭汗，滿意。",
     dialogue: [
-      {
-        speaker: "阿嬤",
-        text: "(把第三碗放在阿公照片前,輕聲)老頭,小明今天學會了。你嚐嚐看,他做得怎樣?",
-      },
-      { speaker: "小明", text: "(愣住,然後安靜地坐下,吃了第一口)" },
-      {
-        speaker: "小明",
-        text: "(放下筷子,聲音有點啞)阿嬤⋯味道跟我小時候一樣。",
-      },
-      {
-        speaker: "阿嬤",
-        text: "(轉頭擦了一下眼睛,然後笑)當然啊。妳阿公以前最愛這道。",
-      },
-      { speaker: null, text: "(阿咪跳上桌子,被阿嬤輕輕推下去)" },
+      { speaker: "桃姨", text: "好矣，攏好矣。上菜！" },
     ],
+  },
+  {
+    id: "P.22",
+    title: "上菜 ── 一道一道的高潮",
+    narration: "紅蟳米糕、白斬雞、控肉、四神湯…蒸氣油光，一道一道捀出去。",
+    dialogue: [
+      { speaker: null, text: "（擬真食物大特寫連續頁。）" },
+    ],
+    fullBleed: true,
   },
   {
     id: "P.23",
-    title: "阿公的舊筆記本",
-    narration:
-      "吃飽了。小明在櫥仔角落,翻出一本舊舊的筆記本,封面都磨白了。",
+    title: "入座 ── 人客是啥人？",
+    narration: "桃姨這時才感覺，今仔日無仝款。", // [canon]
     dialogue: [
-      { speaker: "小明", text: "阿嬤,這本是…?" },
-      {
-        speaker: "阿嬤",
-        text: "(接過去,翻了兩頁)你阿公的。伊的字潦草甲,我看攏無。",
-      },
-      { speaker: "小明", text: "(指著一頁)這裡寫「肉,三比七」。" },
-      {
-        speaker: "阿嬤",
-        text: "(摸著那頁,沒說話,過了一會兒才把本子還他)你收咧。",
-      },
+      { speaker: null, text: "（紅色塑膠桌坐滿人——攏是熟面孔，厝邊、舊識、三代家人。主桌中央留一个位。）" },
     ],
   },
   {
-    id: "P.24", // [canon] 原 P.10
-    title: "拆解與回顧 ── 把整道菜記在心裡",
-    narration:
-      "故事說完了,飯也吃完了。但這個味道,小明會帶到很遠的地方。出發前,他要把整道菜在心裡拆解清楚。",
+    id: "P.24",
+    title: "大揭露 ── 這桌，是辦予妳的",
+    narration: "阿明共桃姨牽到主桌中央彼个位；眾人舉杯。紅單頂懸本底空白彼欄，這時反面寫著——",
     dialogue: [
-      { speaker: "阿嬤", text: "(在門口)便當給你帶,飛機上吃。" },
-      { speaker: "小明", text: "(發現行李裡的小木鏟,愣了一下)阿嬤⋯" },
-      {
-        speaker: "阿嬤",
-        text: "(打斷他)拿著!妳阿公的。我留鍋,你拿鏟子。一年後回來,你煮給我吃。",
-      },
-      {
-        speaker: "小明",
-        text: "我們把整道菜拆成幾個步驟,我才記得住 ── 備料、烹調、完成,對吧?",
-      },
-      { speaker: "阿嬤", text: "(點頭)就是這樣,你阿公也是這樣教我的。" },
-      {
-        speaker: null,
-        text: "(車子開走。阿咪在窗台喵了一聲。阿嬤對著空空的廚房,輕聲說:)",
-      },
-      { speaker: "阿嬤", text: "老頭,他出發了。" },
+      { speaker: "阿明", text: "阿嬤，今仔日這桌，是阮辦予妳的。" }, // [canon]
     ],
-    activity: "decompose",
+    redSlip: "reveal",
   },
   {
     id: "P.25",
-    title: "機場 ── 一個人的便當",
+    title: "回望 ── 規世人攏咧飼別人，今仔日換人請伊",
     narration:
-      "機場的候機室。小明打開阿嬤塞的便當,滷肉飯的味道一掀開就散出來,旁邊的人都看過來。",
+      "一桌一桌辦過來，桃姨煮予真濟人飽。今仔日，換規庄頭請伊坐主桌。", // [canon]
     dialogue: [
-      { speaker: "小明", text: "(扒了一口,動作頓了一下)" },
-      {
-        speaker: null,
-        text: "(手機響,是阿嬤的訊息:「便當會冷,趁燒食。鏟仔有帶無?」)",
-      },
-      { speaker: "小明", text: "(打字)有帶。阿嬤,味道一樣。" },
-      { speaker: null, text: "(他把便當吃得乾乾淨淨,連湯汁都拌了飯。)" },
+      { speaker: null, text: "（桃姨望著滿桌人，目墘澹，無講話。蒙太奇小格：少年學藝、頭一擺辦桌、養大一家、飼飽規庄頭。）" },
     ],
   },
   {
     id: "P.26",
-    title: "飛機上 ── 木鏟與筆記本",
-    narration:
-      "飛機爬升,雲在窗外。小明從背包拿出那支小木鏟,還有阿公的筆記本。",
+    title: "交鏟 ── 老鼎kap名號交予阿明",
+    narration: "桃姨共彼口刻著「阿桃」的老鼎，連同一支磨亮的木鏟，交予阿明。",
     dialogue: [
-      {
-        speaker: null,
-        text: "(他把木鏟握在手裡,木把手被磨得發亮。)",
-      },
-      {
-        speaker: null,
-        text: "(翻開筆記本,在「肉,三比七」旁邊,用自己的字寫上:「阿嬤說,手會記得。」)",
-      },
-      { speaker: null, text: "(合上本子,看向窗外,很久。)" },
+      { speaker: "桃姨", text: "鼎我用四十冬矣，下跤彼兩字…後擺你加刻你的名。" }, // [canon]
     ],
   },
   {
     id: "P.27",
-    title: "半年後 ── 京都視訊",
-    narration:
-      "半年後。京都的小公寓,窗外飄著細雪。小明的筆電螢幕上,是阿嬤的臉。",
+    title: "一桌人 ── 三代仝桌、厝邊仝桌",
+    narration: "紅桌、暖燈、笑聲，三代kap厝邊仝席。",
     dialogue: [
-      { speaker: "阿嬤", text: "(在螢幕裡)瘦矣喔?有好好食無?" },
-      { speaker: "小明", text: "有啦。阿嬤,我昨天試做滷肉飯。" },
-      { speaker: "阿嬤", text: "(笑)按怎?" },
-      { speaker: "小明", text: "…收汁收過頭,有點鹹。" },
-      { speaker: "阿嬤", text: "(大笑)較少鹽!明仔載閣試。" },
+      { speaker: null, text: "（全景。一桌人食甲歡喜，圍著一位受人敬重的師傅。）" },
     ],
   },
   {
     id: "P.28",
-    title: "京都 ── 第一次自己做",
-    narration:
-      "又過了一陣。小明的小廚房裡,鍋子是新買的,不是那只老鍋仔。他照著筆記本,一個步驟一個步驟來。",
+    title: "半年後 ── 阿明頭一擺家己掌一桌",
+    narration: "阿明縖著藍圍裙，佇另外一場辦桌指揮三口爐，手機計時器排甲齊齊。",
     dialogue: [
-      {
-        speaker: null,
-        text: "(蒜頭下鍋,香氣衝上來 ── 和阿嬤的廚房,一模一樣。)",
-      },
-      { speaker: "小明", text: "(停下手,愣了一下)" },
-      {
-        speaker: null,
-        text: "(他盛了一碗放在桌上;對面沒有人,但他擺了兩雙筷子。)",
-      },
+      { speaker: null, text: "（火頭穩穩，鼎聲清亮。）" },
     ],
   },
   {
     id: "P.29",
-    title: "一年後 ── 回家",
-    narration:
-      "一年到了。小明拖著行李站在阿嬤家門口,背包裡那支木鏟還在。黑貓阿咪在窗台,先看到他。",
+    title: "桃姨做人客 ── 坐台跤食徒弟的菜",
+    narration: "桃姨坐佇台跤，挾一喙阿明做的菜，頕頭。",
     dialogue: [
-      { speaker: "小明", text: "阿嬤,我轉來矣。" },
-      {
-        speaker: "阿嬤",
-        text: "(從廚房探頭)欸,瘦甲。行李先放咧,我鼎仔早就洗好等你。",
-      },
-      { speaker: null, text: "(老鍋仔擺在爐上,擦得發亮。)" },
+      { speaker: "桃姨", text: "…猶會使啦。" }, // [canon]
+      { speaker: null, text: "（喙角偷笑。）" },
     ],
   },
   {
     id: "P.30",
-    title: "煮給阿嬤吃",
-    narration:
-      "這一次,換小明站在爐前。他把木鏟放回老鍋仔裡 ── 鏟子和鍋,又湊成一對。阿嬤坐在桌邊,等著。",
+    title: "老鼎的早晨 ── 灶火無熄",
+    narration: "這口灶，閣欲煮一桌一桌的代誌。", // [canon]
     dialogue: [
-      {
-        speaker: null,
-        text: "(爆香、下肉、淋醬、加水、收汁 ── 他的手沒有停。)",
-      },
-      {
-        speaker: "阿嬤",
-        text: "(嚐了第一口,慢慢點頭,眼睛亮亮的)…有阿公的味。",
-      },
-      {
-        speaker: "小明",
-        text: "(盛了三碗,把第三碗,輕輕放在阿公的照片前)",
-      },
-      { speaker: "阿嬤", text: "(看著那碗,笑了)你嘛學會這個了。" },
+      { speaker: null, text: "（呼應封面：老灶間天拄光，鼎掛咧，黑貓睏灶邊，只是縛圍裙的背影換做阿明。）" },
     ],
   },
   {
     id: "P.31",
-    title: "結語",
-    narration:
-      "鍋留在阿嬤家,鏟子走過一年又轉來。味道沒有不見 ── 它換了一雙手,繼續傳下去。",
+    title: "食譜卡 ── 今仔日這桌的菜",
+    narration: "今仔日這桌十道菜（含彼道蠔油救場菜）的簡要做法，收佇遮，會使印、會使帶轉去。",
     dialogue: [
-      { speaker: null, text: "(窗台上,阿咪瞇著眼,曬著午後的光。)" },
-      {
-        speaker: null,
-        text: "(老鍋仔靜靜擺著,木把手發亮,鍋緣那個缺角,還在。)",
-      },
+      { speaker: null, text: "（一頁食譜卡。知識回收，可印可帶走。）" },
+    ],
+  },
+  {
+    id: "P.32",
+    title: "結語 ── 一桌菜，是一世人的條理",
+    narration:
+      "拆場、揣規律、排時間、隨機應變——煮一桌菜按呢，過一世人嘛是按呢。", // [canon]
+    dialogue: [
+      { speaker: null, text: "（CT × 人生收束：共運算思維扣轉長者一世人的生活智慧。）" },
     ],
   },
 ];
 
-// ── 活動資料設定 ─────────────────────────────────────
+// ── 活動資料設定（照 canon §7／§8） ─────────────────────────────
 
-// 活動1:食材認識。五花肉文案 [canon];其餘 authored(第八章語氣)。
+// 活動 1：menuRead（讀單）。菜名↔主料配對。菜單照 canon §8 冬令食補辦桌十道。
+export interface MenuDish {
+  id: string;
+  name: string;
+  mainIngredient: string;
+}
+
+export const menuDishes: MenuDish[] = [
+  { id: "soup4", name: "四神湯", mainIngredient: "豬肚" },
+  { id: "sesamechicken", name: "麻油雞", mainIngredient: "雞腿" },
+  { id: "crabrice", name: "紅蟳米糕", mainIngredient: "紅蟳" },
+  { id: "poachchicken", name: "白斬雞", mainIngredient: "土雞" },
+  { id: "kongrou", name: "筍乾控肉", mainIngredient: "五花肉" },
+  { id: "steamfish", name: "清蒸魚", mainIngredient: "鮮魚" },
+  { id: "veg", name: "炒時蔬", mainIngredient: "青菜" },
+  { id: "shrimproll", name: "蝦捲", mainIngredient: "蝦仁" },
+  { id: "oysterdish", name: "蠔油亮油控肉", mainIngredient: "蠔油" },
+  { id: "sweetsoup", name: "紅豆湯圓", mainIngredient: "紅豆" },
+];
+
+// 活動 1'：ingredient（認食材）。六種食材＋師父口訣（canon §6 P.8、§7）。
 export interface Ingredient {
   id: string;
   name: string;
+  /** 桃姨介紹這項食材 */
   ahmaIntro: string;
-  ahgongStory: string;
+  /** 師父留落來的口訣（懷舊／生命回顧） */
+  masterTip: string;
 }
 
 export const ingredients: Ingredient[] = [
   {
-    id: "pork",
-    name: "五花肉",
-    ahmaIntro: "這個五花肉啊,要選肥瘦三比七的。", // [canon]
-    ahgongStory:
-      "妳阿公以前每次都站在攤位前看半小時,他說「不對不要」。後來老闆都直接說「阿水兄,這塊給你留的」。", // [canon]
-  },
-  {
     id: "soy",
     name: "醬油",
-    ahmaIntro: "醬油揀甘甜的,鹹味才不會死死的。",
-    ahgongStory: "妳阿公啊,倒醬油從來不量,他說「手會記得」。我學了好久才敢學他這樣。",
+    ahmaIntro: "醬油揀甘甜的，鹹味才袂死死。", // [canon 口訣]
+    masterTip: "師父講：「醬油揀甘甜的」，色甜味才會圓。",
   },
   {
     id: "wine",
     name: "米酒",
-    ahmaIntro: "米酒一點點就好,去腥提香,毋通倒太濟。",
-    ahgongStory: "有一次妳阿公手滑倒太多,整鍋酒味,他還硬說「這是特別版」。",
+    ahmaIntro: "米酒一點點就好，去腥提芳，毋通倒傷濟。",
+    masterTip: "師父講：「酒落鼎邊，芳氣才會起。」",
   },
   {
     id: "sugar",
     name: "冰糖",
-    ahmaIntro: "用冰糖毋是白糖喔,顏色才會油亮油亮。",
-    ahgongStory: "妳阿公收尾一定要放冰糖,他說「甜一點點,人就會想起家」。",
+    ahmaIntro: "用冰糖毋是白糖喔，色才會油亮油亮。", // [canon 口訣]
+    masterTip: "師父講：「冰糖落少少，色才會水。」", // [canon 口訣]
   },
   {
     id: "garlic",
     name: "蒜頭",
-    ahmaIntro: "蒜頭多剝幾粒,爆香的時陣味才夠。",
-    ahgongStory: "剝蒜頭以前都是妳阿公的工課,他邊剝邊念,念著念著就剝完一整盤了。",
+    ahmaIntro: "蒜頭加剝幾粒，爆香的時陣味才夠。",
+    masterTip: "師父講：「蒜頭先落鼎，規桌菜攏對遮起頭。」",
   },
   {
     id: "spice",
     name: "五香粉",
-    ahmaIntro: "五香粉落少少就好,香氣藏在後面,毋是搶味的。",
-    ahgongStory: "妳阿公說五香粉是「偷藏的撇步」,人家問起來,他都笑笑不講。",
+    ahmaIntro: "五香粉落少少就好，芳氣藏佇後壁，毋是搶味的。",
+    masterTip: "師父講：「五香是藏咧的撇步，落手愛輕。」",
+  },
+  {
+    id: "ginger",
+    name: "薑",
+    ahmaIntro: "薑母切片落鼎，去腥又顧胃，冬天上要緊。",
+    masterTip: "師父講：「薑母愛先煏芳，麻油雞才有魂。」",
   },
 ];
 
-// 活動2:步驟排序。正解順序。
+// 活動 2：marketPick（揀肉）。正解＝肥瘦三比七。
+export interface ChoiceOption {
+  id: string;
+  label: string;
+  correct: boolean;
+}
+
+export const marketOptions: ChoiceOption[] = [
+  { id: "lean", label: "瘦肉傷濟，強欲無肥（太瘦）", correct: false },
+  { id: "balanced", label: "肥瘦三比七（肥三瘦七）", correct: true },
+  { id: "fat", label: "肥肉傷濟，油花過半（太肥）", correct: false },
+];
+
+// 活動 3：stepSort（排步驟）。控肉正解序列（canon P.11）。
 export const stepSortCorrect: string[] = [
   "洗切肉塊",
   "爆香蒜頭",
   "淋醬上色",
   "加水燉煮",
-  "大火收汁",
+  "收汁",
 ];
 
-// 活動3:模式辨別。三道菜的步驟,共同步驟為「爆香」。
+// 活動 4：pattern（揣規律）。三道菜共同步驟＝爆香；另共用高湯底。
 export interface Dish {
   name: string;
   steps: string[];
 }
 
 export const patternDishes: Dish[] = [
-  { name: "滷肉飯", steps: ["洗切肉塊", "爆香", "淋醬上色", "燉煮"] },
-  { name: "炒青菜", steps: ["洗菜", "爆香", "下青菜", "起鍋"] },
-  { name: "煮湯", steps: ["備料", "爆香", "加水", "煮滾"] },
+  { name: "控肉", steps: ["洗切肉塊", "爆香", "淋醬上色", "燉煮"] },
+  { name: "炒時蔬", steps: ["洗菜", "爆香", "落青菜", "起鼎"] },
+  { name: "煮湯", steps: ["備料", "爆香", "加高湯", "煮滾"] },
 ];
 export const patternCommonStep = "爆香";
+export const patternSharedBase = "共用高湯底";
 
-// 活動4:條件判斷。沒有醬油時的選項。
+// 活動 5：condition（條件判斷 IF）。老豆油焦去的選項（canon P.14）。
 export interface ConditionOption {
   id: string;
   label: string;
@@ -629,14 +440,25 @@ export interface ConditionOption {
 }
 
 export const conditionOptions: ConditionOption[] = [
-  { id: "A", label: "蠔油 + 少許糖", correct: true },
+  { id: "A", label: "蠔油＋少許冰糖救色", correct: true },
   { id: "B", label: "直接加水煮", correct: false },
-  { id: "C", label: "今天就到這裡,不煮了", correct: false },
+  { id: "C", label: "今仔日就到遮，莫做矣", correct: false },
 ];
 
-// 活動5:記憶回想。今天用過的食材(正解 = 全選 6 種)。沿用 ingredients。
+// 活動 6：memory（點數）。各爐進度——考阿明（代讀者），絕不考桃姨。
+export interface StoveProgress {
+  stove: string;
+  dish: string;
+  state: string;
+}
 
-// 活動6:問題分解。6 任務 → 3 階段。
+export const memoryStoves: StoveProgress[] = [
+  { stove: "頭爐", dish: "筍乾控肉", state: "咧燉" },
+  { stove: "二爐", dish: "四神湯", state: "好矣" },
+  { stove: "三爐", dish: "紅蟳米糕", state: "咧炊" },
+];
+
+// 活動 7：decompose（拆場）。十工作→三階段：備料／烹調／完成（canon P.5）。
 export interface DecomposeStage {
   id: string;
   label: string;
@@ -648,36 +470,24 @@ export interface DecomposeTask {
 }
 
 export const decomposeStages: DecomposeStage[] = [
-  { id: "prep", label: "備料", taskIds: ["cut", "peel"] },
-  { id: "cook", label: "烹調", taskIds: ["saute", "stew"] },
-  { id: "finish", label: "完成", taskIds: ["reduce", "serve"] },
+  { id: "prep", label: "備料站", taskIds: ["pick", "cut", "peel"] },
+  { id: "cook", label: "火頭站", taskIds: ["saute", "stew", "steam"] },
+  { id: "finish", label: "出菜站", taskIds: ["reduce", "plate", "serve"] },
 ];
 
 export const decomposeTasks: DecomposeTask[] = [
-  { id: "cut", label: "切肉" },
-  { id: "peel", label: "剝蒜" },
+  { id: "pick", label: "揀五花肉" },
+  { id: "cut", label: "洗切肉塊" },
+  { id: "peel", label: "剝蒜頭" },
   { id: "saute", label: "爆香" },
   { id: "stew", label: "燉煮" },
+  { id: "steam", label: "炊米糕" },
   { id: "reduce", label: "收汁" },
-  { id: "serve", label: "盛飯" },
+  { id: "plate", label: "排盤" },
+  { id: "serve", label: "捀菜上桌" },
 ];
 
-// ── 延伸活動資料(Phase 2) ───────────────────────────
-
-// 延伸:市場挑五花肉(觀察/條件)。正解 = 肥瘦三比七。
-export interface ChoiceOption {
-  id: string;
-  label: string;
-  correct: boolean;
-}
-
-export const marketOptions: ChoiceOption[] = [
-  { id: "lean", label: "瘦肉太多,幾乎沒有肥", correct: false },
-  { id: "balanced", label: "肥瘦三比七(肥三瘦七)", correct: true },
-  { id: "fat", label: "肥肉太多,油花過半", correct: false },
-];
-
-// 延伸:冰箱搜尋(搜尋/模式)。在瓶罐中找出蠔油。
+// 活動 8：fridgeSearch（揣冰櫥）。佇干擾矸罐中揣蠔油（canon P.16）。
 export interface FridgeItem {
   id: string;
   label: string;
@@ -693,8 +503,30 @@ export const fridgeItems: FridgeItem[] = [
   { id: "mayo", label: "沙拉醬", isAnswer: false },
 ];
 
-// 延伸:火候(序列/條件補強)。燉煮要小火。
+// 活動 9：scheduleStoves（多爐並進）★。簡化長者版：≤3 爐、4–5 道、拖放排時段、開桌時全熱。
+// 「筍乾控肉」需長燉 40 分＝時間限制（canon P.13）。windowMinutes＝開桌前可用的總時間。
+export interface ScheduleDish {
+  id: string;
+  name: string;
+  cookMinutes: number;
+  /** 火候／限制提示，給活動 UI 與提示用 */
+  note?: string;
+}
+
+export const scheduleStoves = {
+  stoveCount: 3,
+  windowMinutes: 45, // 開桌前 45 分鐘起灶
+  dishes: [
+    { id: "kongrou", name: "筍乾控肉", cookMinutes: 40, note: "愛長燉，火愛代先起" },
+    { id: "crabrice", name: "紅蟳米糕", cookMinutes: 25, note: "用炊的" },
+    { id: "soup4", name: "四神湯", cookMinutes: 20, note: "細火慢燉" },
+    { id: "sesamechicken", name: "麻油雞", cookMinutes: 15, note: "薑母先煏芳" },
+    { id: "poachchicken", name: "白斬雞", cookMinutes: 10, note: "汆燙計時" },
+  ] as ScheduleDish[],
+};
+
+// 活動 9'：heatControl（火候，可併入 9）。燉煮要小火（canon §7）。
 export const heatOptions: ChoiceOption[] = [
-  { id: "big", label: "大火,快一點", correct: false },
-  { id: "small", label: "小火,慢慢燉", correct: true },
+  { id: "big", label: "大火，緊一點", correct: false },
+  { id: "small", label: "細火，慢慢燉", correct: true },
 ];

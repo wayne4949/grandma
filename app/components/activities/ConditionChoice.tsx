@@ -9,6 +9,14 @@ import {
   GuideMessage,
 } from "./Feedback";
 
+// 活動・條件判斷（CT：IF）。P.14 危機：上好老豆油焦去，按怎救色？
+// 資料沿用 canon v2 conditionOptions（A 蠔油+冰糖✅／B 加水❌／C 不做❌）。
+// 可重試、答錯不責備、桃姨口氣提示。
+const WRONG_HINT: Record<string, string> = {
+  B: "干焦加水落去，色sîn去、味嘛走矣，這鼎控肉就無魂。閣想看覓。",
+  C: "都欲開桌矣，哪會使按呢放棄。咱來想步數，無一定愛豆油。",
+};
+
 export default function ConditionChoice({
   completed,
   onComplete,
@@ -16,13 +24,15 @@ export default function ConditionChoice({
   completed: boolean;
   onComplete: () => void;
 }) {
-  const [chosenId, setChosenId] = useState<string | null>(null);
+  const [picked, setPicked] = useState<string | null>(completed ? "A" : null);
   const [feedback, setFeedback] = useState<"none" | "wrong" | "right">(
     completed ? "right" : "none",
   );
 
-  const choose = (id: string, correct: boolean) => {
-    setChosenId(id);
+  const solved = feedback === "right";
+
+  const pick = (id: string, correct: boolean) => {
+    setPicked(id);
     if (correct) {
       setFeedback("right");
       if (!completed) onComplete();
@@ -33,44 +43,44 @@ export default function ConditionChoice({
 
   return (
     <ActivityCard>
-      <ActivityHeading>活動 ④ 條件判斷 ── 醬油用完了,怎麼辦?</ActivityHeading>
+      <ActivityHeading>條件判斷 ── 老豆油焦去矣，按怎救色？</ActivityHeading>
       <p className="text-lg text-stone-600 mb-4">
-        醬油剛好用完了。你會怎麼做?選選看「阿公的版本」。
+        招牌控肉拄欲上色，彼矸上好的老豆油拄好焦。人客欲到矣——你欲按怎？
       </p>
 
       <div className="space-y-3">
         {conditionOptions.map((opt) => {
-          const isChosen = opt.id === chosenId;
-          const showRight = feedback === "right" && opt.correct;
+          const isPicked = picked === opt.id;
+          const showRight = solved && opt.correct;
+          const showWrong = feedback === "wrong" && isPicked;
           return (
             <button
               key={opt.id}
               type="button"
-              onClick={() => choose(opt.id, opt.correct)}
-              aria-pressed={isChosen}
-              className={`w-full min-h-[56px] text-left rounded-2xl text-2xl px-5 py-4 border-2 transition-colors ${
+              disabled={solved}
+              onClick={() => pick(opt.id, opt.correct)}
+              className={`w-full text-left min-h-[56px] px-5 py-4 rounded-2xl border-2 text-xl font-bold transition-colors ${
                 showRight
-                  ? "bg-emerald-200 border-emerald-500 text-emerald-950 font-bold"
-                  : isChosen && feedback === "wrong"
-                    ? "bg-rose-50 border-rose-300"
-                    : "bg-white border-stone-200 hover:bg-amber-50"
+                  ? "bg-emerald-200 border-emerald-500 text-emerald-950"
+                  : showWrong
+                    ? "bg-rose-100 border-rose-400 text-rose-900"
+                    : "bg-white border-stone-200 text-stone-800 enabled:hover:bg-amber-50 disabled:opacity-60"
               }`}
             >
-              <span className="font-bold text-amber-700 mr-2">{opt.id}.</span>
+              <span className="text-amber-600 mr-2">{opt.id}.</span>
               {opt.label}
             </button>
           );
         })}
       </div>
 
-      {feedback === "wrong" && (
-        <GuideMessage>
-          <span className="mr-1">(阿咪:喵?)</span>
-          妳阿公一定不會這樣⋯再想想?
-        </GuideMessage>
+      {feedback === "wrong" && picked && (
+        <GuideMessage>{WRONG_HINT[picked] ?? "閣想看覓，揣會當救色的步數。"}</GuideMessage>
       )}
       {feedback === "right" && (
-        <DoneBanner>來,我們今天就試試看「阿公的版本」!</DoneBanner>
+        <DoneBanner>
+          著！蠔油加少許冰糖救色——這正是幾十年前師父料無夠時，烏白舞煞舞出的成名菜步數。
+        </DoneBanner>
       )}
     </ActivityCard>
   );

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "阿嬤的料理日記:傳家滷肉飯",
+  title: "阿桃師的辦桌",
   description:
-    "一本給銀髮族的互動繪本:跟著阿桃阿嬤,把家傳滷肉飯的味道一頁一頁傳下去。",
+    "一本給銀髮族的互動繪本:跟著總鋪師桃姨辦一桌十道菜,用運算思維把一輩子的手藝重新整理出條理。",
 };
 
 export default function RootLayout({

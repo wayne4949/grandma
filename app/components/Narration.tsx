@@ -1,9 +1,9 @@
 import type { Dialogue } from "../lib/story";
 
 const SPEAKER_STYLE: Record<string, string> = {
-  阿嬤: "bg-rose-100 text-rose-900 border-rose-200",
-  小明: "bg-sky-100 text-sky-900 border-sky-200",
-  攤位老闆: "bg-lime-100 text-lime-900 border-lime-200",
+  桃姨: "bg-rose-100 text-rose-900 border-rose-200",
+  阿明: "bg-sky-100 text-sky-900 border-sky-200",
+  肉販: "bg-lime-100 text-lime-900 border-lime-200",
 };
 
 export default function Narration({
