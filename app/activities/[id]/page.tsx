@@ -22,8 +22,6 @@ export default async function ActivityDetail({
   const a = getActivity(id);
   if (!a) notFound();
 
-  const bookPage = a.page.replace("P.", "");
-
   return (
     <main className="min-h-screen p-5 sm:p-8">
       <div className="w-full max-w-2xl mx-auto">
@@ -33,12 +31,6 @@ export default async function ActivityDetail({
             className="min-h-[48px] px-4 py-2 rounded-full bg-stone-100 text-stone-700 hover:bg-stone-200 text-lg flex items-center"
           >
             ← 活動列表
-          </Link>
-          <Link
-            href={`/book/${bookPage}`}
-            className="min-h-[48px] px-4 py-2 rounded-full bg-amber-100 text-amber-800 hover:bg-amber-200 text-lg flex items-center"
-          >
-            看這頁繪本（{a.page}）
           </Link>
         </div>
 

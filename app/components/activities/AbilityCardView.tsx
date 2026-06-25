@@ -9,7 +9,7 @@ export default function AbilityCardView({ ability }: { ability: AbilityCard }) {
     <section className="rounded-3xl bg-white border-2 border-amber-200 shadow-md p-6">
       <p className="text-lg text-amber-600 font-bold mb-1">能力卡</p>
       <h2 className="font-black text-amber-800 mb-3">
-        這題咧練的是 ── {ability.skill}
+        這題在練的是 ── {ability.skill}
       </h2>
       <p className="text-xl text-stone-700 mb-2">{ability.what}</p>
       <p className="text-xl text-stone-700">
@@ -17,7 +17,7 @@ export default function AbilityCardView({ ability }: { ability: AbilityCard }) {
         {ability.did}
       </p>
       <p className="mt-4 text-base text-stone-400">
-        （比挑戰賽簡單，重點是予你知影家己拄才動著啥物腦。）
+        （比挑戰賽簡單，重點是讓你知道自己剛才動到了什麼腦。）
       </p>
     </section>
   );

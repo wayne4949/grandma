@@ -50,9 +50,9 @@ export default function StepSort({
 
   return (
     <ActivityCard>
-      <ActivityHeading>排步驟 ── 控肉愛按怎滷？</ActivityHeading>
+      <ActivityHeading>排步驟 ── 控肉要怎麼滷？</ActivityHeading>
       <p className="text-lg text-stone-600 mb-4">
-        共五个步驟排做正確的順序。會使用滑鼠拖拉，抑是用逐張卡的 ⬆ ⬇ 徙位。
+        把五個步驟排成正確的順序。可以用滑鼠拖拉，或是用每張卡的 ⬆ ⬇ 移位。
       </p>
 
       <ol className="space-y-3">
@@ -83,7 +83,7 @@ export default function StepSort({
                 type="button"
                 onClick={() => move(i, i - 1)}
                 disabled={i === 0}
-                aria-label={`共「${step}」徛懸`}
+                aria-label={`把「${step}」往上移`}
                 className="min-h-[48px] min-w-[48px] rounded-xl bg-stone-100 text-2xl enabled:hover:bg-stone-200 disabled:opacity-30"
               >
                 ⬆
@@ -92,7 +92,7 @@ export default function StepSort({
                 type="button"
                 onClick={() => move(i, i + 1)}
                 disabled={i === order.length - 1}
-                aria-label={`共「${step}」徛低`}
+                aria-label={`把「${step}」往下移`}
                 className="min-h-[48px] min-w-[48px] rounded-xl bg-stone-100 text-2xl enabled:hover:bg-stone-200 disabled:opacity-30"
               >
                 ⬇
@@ -107,16 +107,16 @@ export default function StepSort({
         onClick={check}
         className="mt-5 min-h-[48px] px-6 py-3 rounded-2xl text-xl font-bold bg-amber-500 text-white hover:bg-amber-600"
       >
-        看順序著無
+        看順序對不對
       </button>
 
       {feedback === "wrong" && (
         <GuideMessage>
-          順序猶閣亂亂。莫急——肉愛代先洗切，落尾才收汁，閣斟酌看覓。
+          順序還有點亂。別急——肉要先洗切，最後才收汁，再仔細看看。
         </GuideMessage>
       )}
       {feedback === "right" && (
-        <DoneBanner>鼎仔「叮」一聲 ── 順序著矣，味就袂走精！</DoneBanner>
+        <DoneBanner>鍋子「叮」一聲 ── 順序對了，味道就不會跑掉！</DoneBanner>
       )}
     </ActivityCard>
   );

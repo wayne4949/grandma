@@ -24,17 +24,11 @@ export default function ActivitiesIndex() {
           >
             ← 回首頁
           </Link>
-          <Link
-            href="/book/1"
-            className="min-h-[48px] px-4 py-2 rounded-full bg-amber-100 text-amber-800 hover:bg-amber-200 text-lg flex items-center"
-          >
-            看繪本
-          </Link>
         </div>
 
         <h1 className="font-black text-amber-900 mb-2">動腦活動</h1>
         <p className="text-xl text-stone-700 mb-7">
-          逐个活動攏標明咧練啥物能力。會使重試，做了會出一張能力卡。
+          每個活動都標明在練什麼能力。可以重試，做完會出一張能力卡。
         </p>
 
         <ul className="grid gap-4 sm:grid-cols-2">

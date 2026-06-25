@@ -44,7 +44,7 @@ export default function ActivityRunner({ meta }: { meta: ActivityMeta }) {
           </span>
           <p className="text-2xl font-bold text-stone-600 mb-1">活動建置中</p>
           <p className="text-lg text-stone-500">
-            這个互動小遊戲後一輪就會做出來。下底先看會練著啥物能力。
+            這個互動小遊戲下一輪就會做出來。下面先看看會練到什麼能力。
           </p>
         </section>
       )}

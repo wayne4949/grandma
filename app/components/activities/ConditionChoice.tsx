@@ -13,8 +13,8 @@ import {
 // 資料沿用 canon v2 conditionOptions（A 蠔油+冰糖✅／B 加水❌／C 不做❌）。
 // 可重試、答錯不責備、桃姨口氣提示。
 const WRONG_HINT: Record<string, string> = {
-  B: "干焦加水落去，色sîn去、味嘛走矣，這鼎控肉就無魂。閣想看覓。",
-  C: "都欲開桌矣，哪會使按呢放棄。咱來想步數，無一定愛豆油。",
+  B: "只是加水下去，顏色淡掉、味道也跑了，這鍋控肉就沒魂了。再想想看。",
+  C: "都要開桌了，怎麼可以這樣放棄。我們來想辦法，不一定要醬油。",
 };
 
 export default function ConditionChoice({
@@ -43,9 +43,9 @@ export default function ConditionChoice({
 
   return (
     <ActivityCard>
-      <ActivityHeading>條件判斷 ── 老豆油焦去矣，按怎救色？</ActivityHeading>
+      <ActivityHeading>條件判斷 ── 老醬油燒焦了，怎麼救色？</ActivityHeading>
       <p className="text-lg text-stone-600 mb-4">
-        招牌控肉拄欲上色，彼矸上好的老豆油拄好焦。人客欲到矣——你欲按怎？
+        招牌控肉正要上色，那瓶最好的老醬油剛好燒焦。客人快到了——你要怎麼做？
       </p>
 
       <div className="space-y-3">
@@ -75,11 +75,11 @@ export default function ConditionChoice({
       </div>
 
       {feedback === "wrong" && picked && (
-        <GuideMessage>{WRONG_HINT[picked] ?? "閣想看覓，揣會當救色的步數。"}</GuideMessage>
+        <GuideMessage>{WRONG_HINT[picked] ?? "再想想看，找能救色的辦法。"}</GuideMessage>
       )}
       {feedback === "right" && (
         <DoneBanner>
-          著！蠔油加少許冰糖救色——這正是幾十年前師父料無夠時，烏白舞煞舞出的成名菜步數。
+          對！蠔油加少許冰糖救色——這正是幾十年前師父材料不夠時，臨機應變、卻變出的成名菜做法。
         </DoneBanner>
       )}
     </ActivityCard>

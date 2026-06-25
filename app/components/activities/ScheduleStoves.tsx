@@ -116,12 +116,12 @@ export default function ScheduleStoves({
   const check = () => {
     if (unplaced.length) {
       setFeedback("wrong");
-      setHint(`閣有 ${unplaced.length} 道菜猶未排——逐道攏愛排入爐才會使開桌。`);
+      setHint(`還有 ${unplaced.length} 道菜還沒排——每道都要排進爐才能開桌。`);
       return;
     }
     if (bad.size) {
       setFeedback("wrong");
-      setHint("仝一口爐袂使兩道做伙煮，紅框彼幾道相疊矣，用下跤的按鈕徙較開咧。");
+      setHint("同一口爐不能兩道一起煮，紅框那幾道重疊了，用下面的按鈕移開一點。");
       return;
     }
     setFeedback("right");
@@ -137,17 +137,17 @@ export default function ScheduleStoves({
 
   const giveHint = () =>
     setHint(
-      "控肉愛燉40分，上食時間，叫伊代先起爐（排佇上頭前）上穩當。其他較緊的菜，揣空的爐囥入去就好，毋免逼甲拄拄好。",
+      "控肉要燉40分，最花時間，讓它先起爐（排在最前面）最穩當。其他比較快的菜，找空的爐放進去就好，不必排得剛剛好。",
     );
 
   return (
     <ActivityCard>
-      <ActivityHeading>多爐並進 ── 三口爐，按怎排予開桌攏燒？</ActivityHeading>
+      <ActivityHeading>多爐並進 ── 三口爐，怎麼排才能開桌都熱？</ActivityHeading>
       <p className="text-lg text-stone-600 mb-1">
-        共下跤的菜<strong>拖</strong>入三口爐的時間軸；抑是先點一道菜、閣點爐欲囥的位。
+        把下面的菜<strong>拖</strong>進三口爐的時間軸；或是先點一道菜、再點爐要放的位置。
       </p>
       <p className="text-base text-stone-500 mb-4">
-        規工干焦{WIN}分鐘，開桌佇上尾。排予逐道開桌進前燉好、仝爐莫相疊就好。
+        全程只有{WIN}分鐘，開桌在最後。排到每道開桌前燉好、同爐別重疊就好。
       </p>
 
       {/* 時間軸標頭 */}
@@ -216,7 +216,7 @@ export default function ScheduleStoves({
       {/* 待排的菜（tray） */}
       {unplaced.length > 0 && (
         <div className="mt-5">
-          <p className="text-base text-stone-500 mb-2">猶未排的菜（點一下抑是拖入爐）：</p>
+          <p className="text-base text-stone-500 mb-2">還沒排的菜（點一下或拖進爐）：</p>
           <div className="flex flex-wrap gap-2">
             {unplaced.map((d) => (
               <button
@@ -239,7 +239,7 @@ export default function ScheduleStoves({
       {/* 已排的菜・大粒按鈕微調 */}
       {DISHES.some((d) => place[d.id]) && (
         <div className="mt-5">
-          <p className="text-base text-stone-500 mb-2">已排的菜，會使閣徙：</p>
+          <p className="text-base text-stone-500 mb-2">已排的菜，還可以再移：</p>
           <ul className="space-y-2">
             {DISHES.filter((d) => place[d.id]).map((d) => (
               <li
@@ -259,7 +259,7 @@ export default function ScheduleStoves({
                 <button
                   type="button"
                   onClick={() => nudge(d.id, -1)}
-                  aria-label={`${d.name}較早煮`}
+                  aria-label={`${d.name}早一點煮`}
                   className="min-h-[44px] min-w-[44px] rounded-lg bg-stone-100 text-xl hover:bg-stone-200"
                 >
                   ◀
@@ -267,7 +267,7 @@ export default function ScheduleStoves({
                 <button
                   type="button"
                   onClick={() => nudge(d.id, 1)}
-                  aria-label={`${d.name}較晏煮`}
+                  aria-label={`${d.name}晚一點煮`}
                   className="min-h-[44px] min-w-[44px] rounded-lg bg-stone-100 text-xl hover:bg-stone-200"
                 >
                   ▶
@@ -283,7 +283,7 @@ export default function ScheduleStoves({
                 <button
                   type="button"
                   onClick={() => unplace(d.id)}
-                  aria-label={`${d.name}提出來`}
+                  aria-label={`${d.name}拿出來`}
                   className="min-h-[44px] min-w-[44px] rounded-lg bg-stone-100 text-base hover:bg-stone-200"
                 >
                   ✕
@@ -302,14 +302,14 @@ export default function ScheduleStoves({
           disabled={solved}
           className="min-h-[48px] px-6 py-3 rounded-2xl text-xl font-bold bg-amber-500 text-white enabled:hover:bg-amber-600 disabled:opacity-50"
         >
-          開桌！看好矣未
+          開桌！看好了沒
         </button>
         <button
           type="button"
           onClick={giveHint}
           className="min-h-[48px] px-5 py-3 rounded-2xl text-lg font-bold bg-stone-100 text-stone-700 hover:bg-stone-200"
         >
-          👵 予我一个提示
+          👵 給我一個提示
         </button>
         <button
           type="button"
@@ -323,7 +323,7 @@ export default function ScheduleStoves({
       {hint && feedback !== "right" && <GuideMessage>{hint}</GuideMessage>}
       {feedback === "right" && (
         <DoneBanner>
-          鼎鼎攏燒燙燙，拄拄好開桌！你用三口爐鬥陣煮，共一百外分鐘的工夫，排佇開桌進前攏煮便！五道菜並行走、用時間咧控制——這就是辦桌才有的硬功夫（並行化＋排程）。
+          每鍋都熱騰騰，剛好開桌！你用三口爐一起煮，把一百多分鐘的工夫，排在開桌前全煮好！五道菜並行進行、用時間在控制——這就是辦桌才有的真功夫（並行化＋排程）。
         </DoneBanner>
       )}
     </ActivityCard>

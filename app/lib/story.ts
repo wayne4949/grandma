@@ -361,38 +361,38 @@ export const ingredients: Ingredient[] = [
   {
     id: "soy",
     name: "醬油",
-    ahmaIntro: "醬油揀甘甜的，鹹味才袂死死。", // [canon 口訣]
-    masterTip: "師父講：「醬油揀甘甜的」，色甜味才會圓。",
+    ahmaIntro: "醬油挑甘甜的，鹹味才不會死鹹。",
+    masterTip: "師父說：「醬油挑甘甜的」，色甜味道才會圓潤。",
   },
   {
     id: "wine",
     name: "米酒",
-    ahmaIntro: "米酒一點點就好，去腥提芳，毋通倒傷濟。",
-    masterTip: "師父講：「酒落鼎邊，芳氣才會起。」",
+    ahmaIntro: "米酒一點點就好，去腥提香，別倒太多。",
+    masterTip: "師父說：「酒沿鍋邊下，香氣才會起來。」",
   },
   {
     id: "sugar",
     name: "冰糖",
-    ahmaIntro: "用冰糖毋是白糖喔，色才會油亮油亮。", // [canon 口訣]
-    masterTip: "師父講：「冰糖落少少，色才會水。」", // [canon 口訣]
+    ahmaIntro: "用冰糖不是白糖喔，色才會油亮油亮。",
+    masterTip: "師父說：「冰糖下少少，色才會漂亮。」",
   },
   {
     id: "garlic",
     name: "蒜頭",
-    ahmaIntro: "蒜頭加剝幾粒，爆香的時陣味才夠。",
-    masterTip: "師父講：「蒜頭先落鼎，規桌菜攏對遮起頭。」",
+    ahmaIntro: "蒜頭多剝幾顆，爆香的時候味道才夠。",
+    masterTip: "師父說：「蒜頭先下鍋，整桌菜都從這裡起頭。」",
   },
   {
     id: "spice",
     name: "五香粉",
-    ahmaIntro: "五香粉落少少就好，芳氣藏佇後壁，毋是搶味的。",
-    masterTip: "師父講：「五香是藏咧的撇步，落手愛輕。」",
+    ahmaIntro: "五香粉下少少就好，香氣藏在後頭，不是搶味的。",
+    masterTip: "師父說：「五香是藏起來的訣竅，下手要輕。」",
   },
   {
     id: "ginger",
     name: "薑",
-    ahmaIntro: "薑母切片落鼎，去腥又顧胃，冬天上要緊。",
-    masterTip: "師父講：「薑母愛先煏芳，麻油雞才有魂。」",
+    ahmaIntro: "薑切片下鍋，去腥又顧胃，冬天最要緊。",
+    masterTip: "師父說：「薑要先爆香，麻油雞才有魂。」",
   },
 ];
 
@@ -404,9 +404,9 @@ export interface ChoiceOption {
 }
 
 export const marketOptions: ChoiceOption[] = [
-  { id: "lean", label: "瘦肉傷濟，強欲無肥（太瘦）", correct: false },
+  { id: "lean", label: "瘦肉太多，幾乎沒有肥（太瘦）", correct: false },
   { id: "balanced", label: "肥瘦三比七（肥三瘦七）", correct: true },
-  { id: "fat", label: "肥肉傷濟，油花過半（太肥）", correct: false },
+  { id: "fat", label: "肥肉太多，油花過半（太肥）", correct: false },
 ];
 
 // 活動 3：stepSort（排步驟）。控肉正解序列（canon P.11）。
@@ -442,7 +442,7 @@ export interface ConditionOption {
 export const conditionOptions: ConditionOption[] = [
   { id: "A", label: "蠔油＋少許冰糖救色", correct: true },
   { id: "B", label: "直接加水煮", correct: false },
-  { id: "C", label: "今仔日就到遮，莫做矣", correct: false },
+  { id: "C", label: "今天就到這裡，不做了", correct: false },
 ];
 
 // 活動 6：memory（點數）。各爐進度——考阿明（代讀者），絕不考桃姨。
@@ -453,9 +453,9 @@ export interface StoveProgress {
 }
 
 export const memoryStoves: StoveProgress[] = [
-  { stove: "頭爐", dish: "筍乾控肉", state: "咧燉" },
-  { stove: "二爐", dish: "四神湯", state: "好矣" },
-  { stove: "三爐", dish: "紅蟳米糕", state: "咧炊" },
+  { stove: "頭爐", dish: "筍乾控肉", state: "燉著" },
+  { stove: "二爐", dish: "四神湯", state: "好了" },
+  { stove: "三爐", dish: "紅蟳米糕", state: "蒸著" },
 ];
 
 // 活動 7：decompose（拆場）。十工作→三階段：備料／烹調／完成（canon P.5）。
@@ -517,16 +517,16 @@ export const scheduleStoves = {
   stoveCount: 3,
   windowMinutes: 45, // 開桌前 45 分鐘起灶
   dishes: [
-    { id: "kongrou", name: "筍乾控肉", cookMinutes: 40, note: "愛長燉，火愛代先起" },
-    { id: "crabrice", name: "紅蟳米糕", cookMinutes: 25, note: "用炊的" },
-    { id: "soup4", name: "四神湯", cookMinutes: 20, note: "細火慢燉" },
-    { id: "sesamechicken", name: "麻油雞", cookMinutes: 15, note: "薑母先煏芳" },
+    { id: "kongrou", name: "筍乾控肉", cookMinutes: 40, note: "要長燉，火要先起" },
+    { id: "crabrice", name: "紅蟳米糕", cookMinutes: 25, note: "用蒸的" },
+    { id: "soup4", name: "四神湯", cookMinutes: 20, note: "小火慢燉" },
+    { id: "sesamechicken", name: "麻油雞", cookMinutes: 15, note: "薑先爆香" },
     { id: "poachchicken", name: "白斬雞", cookMinutes: 10, note: "汆燙計時" },
   ] as ScheduleDish[],
 };
 
 // 活動 9'：heatControl（火候，可併入 9）。燉煮要小火（canon §7）。
 export const heatOptions: ChoiceOption[] = [
-  { id: "big", label: "大火，緊一點", correct: false },
-  { id: "small", label: "細火，慢慢燉", correct: true },
+  { id: "big", label: "大火，快一點", correct: false },
+  { id: "small", label: "小火，慢慢燉", correct: true },
 ];

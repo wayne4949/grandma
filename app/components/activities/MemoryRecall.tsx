@@ -82,12 +82,12 @@ export default function MemoryRecall({
 
   return (
     <ActivityCard>
-      <ActivityHeading>鬥相共記 ── 拄才三口爐咧煮啥？</ActivityHeading>
+      <ActivityHeading>一起記住 ── 剛才三口爐在煮什麼？</ActivityHeading>
 
       {phase === "study" ? (
         <>
           <p className="text-lg text-stone-600 mb-4">
-            桃姨無閒，你鬥伊看予清楚：這時三口爐當咧煮啥物？看予飽，才共伊崁起來。
+            桃姨忙不過來，你幫她看清楚：現在三口爐正在煮什麼？看個夠，再把它蓋起來。
           </p>
           <ul className="space-y-3">
             {memoryStoves.map((s) => (
@@ -110,13 +110,13 @@ export default function MemoryRecall({
             onClick={() => setPhase("recall")}
             className="mt-5 min-h-[48px] px-6 py-3 rounded-2xl text-xl font-bold bg-amber-500 text-white hover:bg-amber-600"
           >
-            記好矣，崁起來 →
+            記好了，蓋起來 →
           </button>
         </>
       ) : (
         <>
           <p className="text-lg text-stone-600 mb-4">
-            崁起來矣。拄才佗一口爐咧煮佗一道？點一下菜，閣點伊的爐。
+            蓋起來了。剛才哪一口爐在煮哪一道？點一下菜，再點它的爐。
           </p>
 
           {/* 三口爐 */}
@@ -143,7 +143,7 @@ export default function MemoryRecall({
                           : "bg-stone-50 border-stone-200 border-dashed text-stone-400"
                     }`}
                   >
-                    {dish ?? "點這裡囥菜"}
+                    {dish ?? "點這裡放菜"}
                   </button>
                 </div>
               );
@@ -180,7 +180,7 @@ export default function MemoryRecall({
               disabled={solved}
               className="min-h-[48px] px-6 py-3 rounded-2xl text-xl font-bold bg-amber-500 text-white enabled:hover:bg-amber-600 disabled:opacity-50"
             >
-              看著無
+              看對了沒
             </button>
             {!solved && (
               <button
@@ -188,19 +188,19 @@ export default function MemoryRecall({
                 onClick={() => setPhase("study")}
                 className="min-h-[48px] px-5 py-3 rounded-2xl text-lg font-bold bg-stone-100 text-stone-700 hover:bg-stone-200"
               >
-                閣看一遍
+                再看一遍
               </button>
             )}
           </div>
 
           {feedback === "wrong" && (
             <GuideMessage>
-              莫急，會使閣看一遍。頭爐當咧燉的是啥、佗道已經好矣，慢慢想。
+              別急，可以再看一遍。頭爐正在燉的是什麼、哪道已經好了，慢慢想。
             </GuideMessage>
           )}
           {feedback === "right" && (
             <DoneBanner>
-              三鼎攏予你記甲清清楚楚！邊顧火邊鬥相共記，這就是真實的本事。
+              三鍋都被你記得清清楚楚！邊顧火邊一起記住，這就是真本事。
             </DoneBanner>
           )}
         </>

@@ -36,9 +36,9 @@ export default function FridgeSearch({
 
   return (
     <ActivityCard>
-      <ActivityHeading>揣冰櫥 ── 佗一矸是蠔油？</ActivityHeading>
+      <ActivityHeading>找冰箱 ── 哪一瓶是蠔油？</ActivityHeading>
       <p className="text-lg text-stone-600 mb-4">
-        冰櫥內底矸矸罐罐，揣出彼矸色較深、較稠的蠔油。點點看。
+        冰箱裡瓶瓶罐罐，找出那瓶顏色較深、較濃稠的蠔油。點點看。
       </p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -65,11 +65,11 @@ export default function FridgeSearch({
 
       {feedback === "wrong" && (
         <GuideMessage>
-          毋是彼矸啦。閣揣看覓 ── 色較深、較稠，kap醬油較成的彼矸。
+          不是那瓶啦。再找找看 ── 顏色較深、較濃稠，和醬油比較像的那瓶。
         </GuideMessage>
       )}
       {feedback === "right" && (
-        <DoneBanner>著，就是蠔油！色深閣鹹，等咧豆油無夠就靠伊救色。</DoneBanner>
+        <DoneBanner>對，就是蠔油！色深又鹹，等一下醬油不夠就靠它救色。</DoneBanner>
       )}
     </ActivityCard>
   );
